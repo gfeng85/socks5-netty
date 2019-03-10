@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "./log4j.dtd">
+
+<log4j:configuration>
+	
+	<appender name="infoFileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="Append" value="false"/>
+		<param name="File" value="log/ConsoleOut.log"/>
+		<param name="MaxFileSize" value="50MB"/>
+		<param name="MaxBackupIndex" value="5"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p %X{ID} %X{operationName} %X{userId} - %m%n"/>
+		</layout>
+	</appender>
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy.MM.dd HH:mm:ss}] %p %C:%M(%L) - %m%n"/>
+		</layout>
+	</appender>
+	<appender name="rootAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="Append" value="true"/>
+		<param name="File" value="log/root.log"/>
+		<param name="MaxFileSize" value="50MB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p %X{ID} %X{operationName} %X{userId} - %m%n"/>
+		</layout>
+	</appender>
+	<logger name="com.geccocrawler.socks5" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="infoFileAppender" />
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+	<root>       
+	    <level value="error" />
+	    <appender-ref ref="rootAppender"/>
+	    <appender-ref ref="ConsoleAppender" />
+ 	 </root>
+</log4j:configuration>
