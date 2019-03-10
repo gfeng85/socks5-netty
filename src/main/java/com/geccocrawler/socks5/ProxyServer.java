@@ -121,7 +121,7 @@ public class ProxyServer {
 			bootstrap.group(boss, worker)
 			.channel(NioServerSocketChannel.class)
 			.option(ChannelOption.SO_BACKLOG, 1024)
-			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
+			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 300000)
 			.childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
@@ -131,7 +131,7 @@ public class ProxyServer {
 							new ProxyChannelTrafficShapingHandler(3000, proxyFlowLog, channelListener)
 							);
 					//channel超时处理
-					ch.pipeline().addLast(new IdleStateHandler(3, 30, 0));
+					ch.pipeline().addLast(new IdleStateHandler(0, 0, 0));
 					ch.pipeline().addLast(new ProxyIdleHandler());
 					//netty日志
 					if(logging) {
